@@ -3,12 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Button, message } from "antd";
-
-interface Photo {
-  id: string;
-  url: string;
-  createdAt: string;
-}
+import { Photo } from "@/types";
 
 interface PhotoUploadProps {
   onUpload: (photo: Photo) => void;
@@ -48,7 +43,7 @@ export default function PhotoUpload({ onUpload }: PhotoUploadProps) {
       const result = await response.json();
 
       if (response.ok) {
-        onUpload(result.photo);
+        onUpload({ ...result.photo, comments: [] });
         setSelectedFile(null);
         setPreview("");
         message.success("Photo uploaded successfully!");
